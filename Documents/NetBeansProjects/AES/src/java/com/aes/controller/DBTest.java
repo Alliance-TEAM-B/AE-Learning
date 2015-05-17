@@ -8,7 +8,9 @@ package com.aes.controller;
 import com.aes.model.User;
 import com.aes.util.DAO;
 import com.aes.util.HibernateUtility;
+import com.aes.util.Loggers;
 import java.util.List;
+import java.util.logging.Level;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -19,8 +21,9 @@ import org.hibernate.Transaction;
  */
 public class DBTest {
     public static void main(String[] args) {
-        User user = DAO.getUser("Chuck", "pass123");
-        System.out.println(user.getRole());
-        System.out.println(DAO.getUserByID(user.getId()).getName());
+        System.out.println(DAO.deleteUser(5));
+        Loggers.getLogger().log(Level.INFO, "Logger works");
+        
+        HibernateUtility.getSessionFactory().close();
     }
 }

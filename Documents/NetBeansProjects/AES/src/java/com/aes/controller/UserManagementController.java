@@ -24,10 +24,27 @@ public class UserManagementController {
         
         User user = null;
         
-        if (DAO.getUser(username, password).getType().equalsIgnoreCase("Admin")) {
+        if (isAdmin(adminUsername, adminPassword)) {
             user = DAO.addUser(role, name, username, password, bunit, type);
         }
         
         return user;
+    }
+    
+    
+    @RequestMapping(value="delete/{adminUsername}/{adminPassword}/{userid}", method = RequestMethod.GET, headers= "Accept=application/json")
+    public boolean deleteUser(@PathVariable String adminUsername, @PathVariable String adminPassword, @PathVariable int userid) {
+        boolean erased = false;
+        
+        if (isAdmin(adminUsername, adminPassword)) {
+             erased = DAO.deleteUser(userid);
+        }
+        
+        return erased;
+    }
+    
+            
+    private boolean isAdmin(String username, String password) {
+        return DAO.getUser(username, password).getType().equalsIgnoreCase("Admin");
     }
 }
